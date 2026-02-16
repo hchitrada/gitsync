@@ -1,53 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::LanguageExtensions
-Description: Dynamic EFS File Systems using Fn::ForEach
-
-Parameters:
-  VpcId:
-    Type: AWS::EC2::VPC::Id
-
-  SubnetId:
-    Type: AWS::EC2::Subnet::Id
-
-  EFSNames:
-    Type: CommaDelimitedList
-    Description: List of EFS names to create
-
+Description: Route resources for existing route table
 Resources:
-  EFSSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
+  EC2Route1:
+    Type: AWS::EC2::Route
+    DeletionPolicy: Retain
     Properties:
-      GroupDescription: EFS Security Group
-      VpcId: !Ref VpcId
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 2049
-          ToPort: 2049
-          CidrIp: 0.0.0.0/0
-
-  Fn::ForEach::EFSResources:
-    - EFSName
-    - !Ref EFSNames
-    - FileSystem&{EFSName}:
-        Type: AWS::EFS::FileSystem
-        Properties:
-          Encrypted: true
-          FileSystemTags:
-            - Key: Name
-              Value: !Sub ${EFSName}
-      MountTarget&{EFSName}:
-        Type: AWS::EFS::MountTarget
-        Properties:
-          FileSystemId: !Ref
-            Fn::Sub: FileSystem${EFSName}
-          SubnetId: !Ref SubnetId
-          SecurityGroups:
-            - !Ref EFSSecurityGroup
-
-Outputs:
-  Fn::ForEach::EFSOutputs:
-    - EFSName
-    - !Ref EFSNames
-    - FileSystemId&{EFSName}:
-        Value: !Ref
-          Fn::Sub: FileSystem${EFSName}
+      RouteTableId: rtb-0ba71607b997a7daa
+      DestinationCidrBlock: 10.155.216.0/22
+      GatewayId: igw-08b1e2cc3319944af
