@@ -8,3 +8,11 @@ Resources:
       RouteTableId: rtb-0ba71607b997a7daa
       DestinationCidrBlock: 10.155.216.0/22
       GatewayId: igw-08b1e2cc3319944af
+
+  EC2Route2:
+    Type: AWS::EC2::Route
+    DeletionPolicy: Retain
+    Properties:
+      RouteTableId: rtb-0ba71607b997a7daa
+      DestinationCidrBlock: 192.168.1.0/16
+      GatewayId: igw-08b1e2cc3319944af
