@@ -1,0 +1,6 @@
+template-file-path: testdeployment.yaml
+parameters:
+  VpcId: vpc-03b9804d4998fffcf
+  EFSNames: user1,user2,user3,user4
+  SubnetId: subnet-080d350f9bf14839c
+tags: {}
