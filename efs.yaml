@@ -1,10 +1,3 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Description: Route resources for existing route table
-Resources:
-  EC2Route1:
-    Type: AWS::EC2::Route
-    DeletionPolicy: Retain
-    Properties:
-      RouteTableId: rtb-0ba71607b997a7daa
-      DestinationCidrBlock: 10.155.192.0/22
-      GatewayId: igw-08b1e2cc3319944af
+template-file-path: efs.yaml
+parameters: {}
+tags: {}
